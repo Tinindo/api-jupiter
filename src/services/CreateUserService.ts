@@ -42,7 +42,7 @@ class CreateUserService {
 
         const hashedPassword = await hash(password, 10);
 
-        const [createdUser] = await database
+        const [createdUser] = await database('users')
             .insert({
                 first_name,
                 last_name,
