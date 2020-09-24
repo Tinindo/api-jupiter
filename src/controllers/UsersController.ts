@@ -4,16 +4,25 @@ import database from '../database/connection';
 import createUserService from '../services/CreateUserService';
 
 class UsersController {
+    async findOne(request: Request, response: Response): Promise<Response> {
+        const { id } = request.params;
+
+        const [user] = await database('users')
+            .select('*')
+            .where('users.id', '=', id);
+
+        delete user.password;
+
+        return response.json(user);
+    }
+
     async create(request: Request, response: Response): Promise<Response> {
-        try {
-            console.log(request.body);
-            const createdUser = await createUserService.execute(request);
 
-            return response.status(201).json(createdUser);
+        //valida se o usuário já existe
 
-        } catch (error) {
-            return response.status(400).json({ error: error.stack || error.message || error });
-        }
+        const createdUser = await createUserService.execute(request);
+
+        return response.status(201).json(createdUser);
     }
 
 
