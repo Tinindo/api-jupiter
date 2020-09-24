@@ -7,7 +7,8 @@ module.exports = {
         host: process.env.POSTGRES_HOST,
         user: process.env.POSTGRES_USERNAME,
         password: process.env.POSTGRES_PASSWORD,
-        database: process.env.POSTGRES_DATABASE
+        database: process.env.POSTGRES_DATABASE,
+        ssl: true,
     },
     migrations: {
         directory: path.join(__dirname, 'src', 'database', 'migrations')

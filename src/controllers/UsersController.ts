@@ -19,7 +19,6 @@ class UsersController {
 
     async list(request: Request, response: Response): Promise<Response> {
         const { limit, offset } = request.query;
-        console.log({ limit, offset })
 
         const users = await database('users')
             .select('id', 'first_name', 'last_name', 'email', 'whatsapp', 'document',

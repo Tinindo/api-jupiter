@@ -4,11 +4,15 @@ import UsersController from './controllers/UsersController';
 
 import paginationHandler from './middlewares/paginationHandler';
 
-const usersRoutes = Router();
+const routes = Router();
 
 const usersController = new UsersController();
 
-usersRoutes.get('/users', paginationHandler, usersController.list);
-usersRoutes.post('/users', usersController.create);
+routes.get('/', (request, response) => {
+    return response.json({ success: true });
+});
 
-export default usersRoutes;
+routes.get('/users', paginationHandler, usersController.list);
+routes.post('/users', usersController.create);
+
+export default routes;
