@@ -4,8 +4,8 @@ import 'dotenv/config';
 import router from './routes';
 import './database/connection';
 
-const PORT = Number(process.env.APP_PORT) || 3030;
-const HOST = process.env.APP_HOST || '0.0.0.0';
+const PORT = Number(process.env.PORT) || 3030;
+// const HOST = process.env.APP_HOST || '0.0.0.0';
 
 const app = express();
 
