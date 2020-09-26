@@ -1,8 +1,7 @@
-import moment from 'moment-timezone';
 import { Request } from 'express';
 import { hash } from 'bcrypt';
 
-import database from '../database/connection';
+import database from '../../database/connection';
 
 interface CreatedUserResponse {
     first_name: string;

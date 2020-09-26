@@ -1,6 +1,6 @@
 import { Request } from 'express';
 
-import database from '../database/connection';
+import database from '../../database/connection';
 
 interface CreateUserPropertyResponse {
     user_id: number;

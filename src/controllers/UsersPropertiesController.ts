@@ -1,18 +1,18 @@
 import { Request, Response } from 'express';
 
-import createUserProperty from '../services/CreateUserPropertyService';
+import createUserProperty from '../services/UsersProperties/CreateUserPropertyService';
 
 class UsersAddressesController {
     async create(request: Request, response: Response) {
-        try {
+        const createdUserProperty = await createUserProperty.execute(request);
 
-            const createdUserProperty = await createUserProperty.execute(request);
+        return response.status(201).json(createdUserProperty);
+    }
 
-            return response.status(201).json(createdUserProperty);
+    async listByUser(request: Request, response: Response) {
+        const { id } = request.params;
 
-        } catch (error) {
-            return response.status(400).json({ error: error.stack || error.message || error });
-        }
+
     }
 }
 

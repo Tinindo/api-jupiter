@@ -1,39 +1,57 @@
 import { Request, Response } from 'express';
 import database from '../database/connection';
 
-import createUserService from '../services/CreateUserService';
+import createUser from '../services/Users/CreateUserService';
+import findUserDetails from '../services/Users/FindUserDetailsByIdService';
+
+import AppError from '../helpers/AppError';
+import isUserCreated from '../helpers/isUserCreated';
 
 class UsersController {
     async findOne(request: Request, response: Response): Promise<Response> {
         const { id } = request.params;
 
-        const [user] = await database('users')
-            .select('*')
-            .where('users.id', '=', id);
-
-        delete user.password;
+        const user = await findUserDetails.execute(id);
 
         return response.json(user);
     }
 
     async create(request: Request, response: Response): Promise<Response> {
+        const { email } = request.body;
 
-        //valida se o usuário já existe
+        const userAlreadyExists = await isUserCreated.execute(email);
 
-        const createdUser = await createUserService.execute(request);
+        if (userAlreadyExists) {
+            throw new AppError('Já existe um usuário com esse e-mail', 400);
+        }
+
+        const createdUser = await createUser.execute(request);
 
         return response.status(201).json(createdUser);
     }
 
-
     async list(request: Request, response: Response): Promise<Response> {
         const { limit, offset } = request.query;
 
+        const usersFieldsToReturn = [
+            'user_id',
+            'first_name',
+            'last_name',
+            'email',
+            'whatsapp',
+            'document',
+            'birth_date',
+            'is_provider',
+            'active',
+            'avatar',
+            'created_at',
+            'updated_at'
+        ];
+
         const users = await database('users')
-            .select('id', 'first_name', 'last_name', 'email', 'whatsapp', 'document',
-                'birth_date', 'is_provider', 'active', 'avatar', 'created_at', 'updated_at')
-            .limit(limit)
-            .offset(offset);
+            .select(usersFieldsToReturn)
+            .limit(Number(limit))
+            .offset(Number(offset));
 
         return response.json(users);
     }

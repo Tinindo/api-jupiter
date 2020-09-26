@@ -13,7 +13,7 @@ function errorHandler(error: Error, request: Request, response: Response, next: 
 
     return response.status(500).json({
         status: 'error',
-        message: 'Internal server error'
+        message: 'Ooops! Erro interno no servidor :('
     });
 }
 
