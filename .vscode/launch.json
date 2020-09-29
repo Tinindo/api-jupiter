@@ -3,7 +3,7 @@
     "configurations": [
         {
             "name": "Launch Program",
-            "program": "${workspaceFolder}/app.js",
+            "program": "${workspaceFolder}/src/server.js",
             "port": "1234",
             "request": "launch",
             "skipFiles": [

@@ -1,0 +1,25 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.down = exports.up = void 0;
+async function up(knex) {
+    await knex.schema.createTable('users', (table) => {
+        table.increments('user_id').unsigned().primary();
+        table.string('first_name', 50).notNullable();
+        table.string('last_name', 200).notNullable();
+        table.string('email', 200).notNullable();
+        table.string('password', 300).notNullable();
+        table.string('whatsapp', 30).notNullable();
+        table.string('document', 20).notNullable();
+        table.date('birth_date');
+        table.boolean('is_provider');
+        table.boolean('active').defaultTo(true);
+        table.string('avatar', 300);
+        table.dateTime('created_at').defaultTo(knex.fn.now());
+        table.dateTime('updated_at').defaultTo(knex.fn.now());
+    });
+}
+exports.up = up;
+async function down(knex) {
+    await knex.schema.dropTable('users');
+}
+exports.down = down;
