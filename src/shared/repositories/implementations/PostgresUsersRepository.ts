@@ -1,7 +1,7 @@
 import Knex from 'knex';
 import { hash } from 'bcrypt';
 
-import { User } from '../../entities/User';
+import { User } from '@entities/User';
 
 export class PostgresUsersRepository {
     constructor(private connection: Knex) { }

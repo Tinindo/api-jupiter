@@ -44,16 +44,16 @@
         "useCases/*"
       ],
       "@repositories/*": [
-        "repositories/*"
+        "shared/repositories/*"
       ],
       "@helpers/*": [
-        "helpers/*"
+        "shared/helpers/*"
       ],
       "@shared/*": [
         "shared/*"
       ],
       "@middlewares/*": [
-        "middlewares/*"
+        "shared/middlewares/*"
       ],
       "@entities/*": [
         "entities/*"

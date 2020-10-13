@@ -4,7 +4,7 @@ import UsersController from './controllers/UsersController';
 import UsersScoresController from './controllers/UsersScoresController';
 import UsersPropertiesController from './controllers/UsersPropertiesController';
 
-import paginationHandler from './middlewares/paginationHandler';
+import { paginationHandler } from '@middlewares/paginationHandler';
 
 const routes = Router();
 

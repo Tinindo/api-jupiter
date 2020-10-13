@@ -1,5 +1,5 @@
 import Knex from 'knex';
-import { UserProperty } from '../../entities/UserProperty';
+import { UserProperty } from '@entities/UserProperty';
 
 export class PostgresUsersPropertiesRepository {
     constructor(

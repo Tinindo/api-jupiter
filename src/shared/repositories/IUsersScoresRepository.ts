@@ -1,4 +1,4 @@
-import { UserScore } from "../entities/UserScore";
+import { UserScore } from "@entities/UserScore";
 
 export interface IUsersScoresRepository {
     create(data: UserScore): Promise<UserScore>

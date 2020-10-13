@@ -1,5 +1,5 @@
 import Knex from 'knex';
-import { UserScore } from '../../entities/UserScore'
+import { UserScore } from '@entities/UserScore'
 
 export class PostgresUsersScoresRepository {
     constructor(
