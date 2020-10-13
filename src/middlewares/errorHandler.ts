@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import AppError from '../helpers/AppError';
+import { AppError } from '../helpers/AppError';
 
 function errorHandler(error: Error, request: Request, response: Response, next: NextFunction): Response {
     if (error instanceof AppError) {
@@ -9,11 +9,13 @@ function errorHandler(error: Error, request: Request, response: Response, next: 
         });
     }
 
-    console.log(error);
+    console.error(error);
 
     return response.status(500).json({
         status: 'error',
-        message: 'Ooops! Erro interno no servidor :('
+        message: 'Ooops! Erro interno no servidor :(',
+        internalMessage: error.message,
+        stack: error.stack,
     });
 }
 

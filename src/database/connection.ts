@@ -1,7 +1,7 @@
 import knex from 'knex';
 import 'dotenv/config';
 
-const database = knex({
+const connection = knex({
     client: 'postgres',
     connection: {
         host: process.env.POSTGRES_HOST,
@@ -12,4 +12,4 @@ const database = knex({
     }
 });
 
-export default database;
+export { connection };

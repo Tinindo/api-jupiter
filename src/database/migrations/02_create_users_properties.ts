@@ -3,10 +3,11 @@ import * as Knex from 'knex';
 export async function up(knex: Knex): Promise<void> {
     await knex.schema.createTable('users_properties', (table) => {
 
-        table.increments('address_id').primary();
+        table.increments('property_id').primary();
 
         table.string('postal_code').notNullable();
         table.string('number', 20).notNullable();
+        table.string('complement', 50);
         table.string('street', 200).notNullable();
         table.string('neighborhood', 200).notNullable();
         table.string('city', 50).notNullable();
