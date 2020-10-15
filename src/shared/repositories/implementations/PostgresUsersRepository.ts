@@ -6,18 +6,18 @@ import { User } from '@entities/User';
 export class PostgresUsersRepository {
     constructor(private connection: Knex) { }
 
-    async findByEmail(email: string): Promise<User | false> {
+    async findByEmail(email: string, returnPasswordHash = false): Promise<User | false> {
         const [user] = await this.connection('users')
             .select('*')
             .where('email', '=', email);
-
-        console.log('user by email => ', user);
 
         if (!user) {
             return false;
         }
 
-        delete user.password;
+        if (!returnPasswordHash) {
+            delete user.password;
+        }
 
         return user;
     }
