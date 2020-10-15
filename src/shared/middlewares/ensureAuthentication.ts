@@ -25,7 +25,6 @@ export function ensureAuthentication(request: Request, response: Response, next:
 
     try {
         const decoded = verify(token, process.env.JWT_SECRET_KEY);
-        console.log(decoded)
 
         const { sub } = decoded as TokenPayload;
 

@@ -29,6 +29,7 @@ export class AuthenticateUserUseCase {
         }
 
         const passwordMatched = await compare(password, user.password);
+        delete user.password;
 
         if (!passwordMatched) {
             throw new AppError('Combinação de usuário/senha inválida', 401);

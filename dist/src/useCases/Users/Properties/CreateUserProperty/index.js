@@ -1,0 +1,14 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.createUserPropertyController = exports.createUserPropertyUseCase = void 0;
+const PostgresUsersPropertiesRepository_1 = require("@repositories/implementations/PostgresUsersPropertiesRepository");
+const PostgresUsersRepository_1 = require("@repositories/implementations/PostgresUsersRepository");
+const CreateUserPropertyController_1 = require("./CreateUserPropertyController");
+const CreateUserPropertyUseCase_1 = require("./CreateUserPropertyUseCase");
+const connection_1 = require("@database/connection");
+const usersPropertiesRepository = new PostgresUsersPropertiesRepository_1.PostgresUsersPropertiesRepository(connection_1.connection);
+const usersRepository = new PostgresUsersRepository_1.PostgresUsersRepository(connection_1.connection);
+const createUserPropertyUseCase = new CreateUserPropertyUseCase_1.CreateUserPropertyUseCase(usersRepository, usersPropertiesRepository);
+exports.createUserPropertyUseCase = createUserPropertyUseCase;
+const createUserPropertyController = new CreateUserPropertyController_1.CreateUserPropertyController(createUserPropertyUseCase);
+exports.createUserPropertyController = createUserPropertyController;
