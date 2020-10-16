@@ -7,8 +7,8 @@ function paginationHandler(request, response, next) {
     let validatedOffset = parseInt(String(offset));
     validatedLimit = !validatedLimit || validatedLimit > 100 ? 20 : validatedLimit;
     validatedOffset = !validatedOffset ? 0 : validatedOffset;
-    request.query.limit = validatedLimit;
-    request.query.offset = validatedOffset;
+    request.query.limit = String(validatedLimit);
+    request.query.offset = String(validatedOffset);
     next();
 }
 exports.paginationHandler = paginationHandler;

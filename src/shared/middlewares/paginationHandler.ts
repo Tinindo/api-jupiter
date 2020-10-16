@@ -8,8 +8,8 @@ export function paginationHandler(request: Request, response: Response, next: Ne
     validatedLimit = !validatedLimit || validatedLimit > 100 ? 20 : validatedLimit;
     validatedOffset = !validatedOffset ? 0 : validatedOffset;
 
-    request.query.limit = validatedLimit;
-    request.query.offset = validatedOffset;
+    request.query.limit = String(validatedLimit);
+    request.query.offset = String(validatedOffset);
 
     next();
 }
