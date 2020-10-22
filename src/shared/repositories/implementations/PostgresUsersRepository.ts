@@ -1,4 +1,4 @@
-import Knex from 'knex';
+import Knex, { Raw } from 'knex';
 import { hash } from 'bcrypt';
 
 import { User } from '@entities/User';
@@ -39,6 +39,48 @@ export class PostgresUsersRepository {
 
     async list(limit: number, offset: number): Promise<User[]> {
         const usersFieldsToReturn = [
+            'users.user_id',
+            'users.first_name',
+            'users.last_name',
+            'users.email',
+            'users.whatsapp',
+            'users.document',
+            'users.birth_date',
+            'users.is_provider',
+            'users.active',
+            'users.avatar',
+            'users.created_at',
+            'users.updated_at',
+        ];
+
+        // SELECT users.user_id, AVG(users_scores.score) as score
+        // FROM users
+        // LEFT JOIN users_scores
+        // ON users.user_id = users_scores.user_id
+        // GROUP BY users.user_id
+
+        const users = await this.connection
+            .select(usersFieldsToReturn)
+            .avg({ score: 'users_scores.score' })
+            .from('users')
+            .leftJoin('users_scores', 'users.user_id', 'users_scores.user_id')
+            .groupBy('users.user_id')
+            .limit(limit)
+            .offset(offset);
+
+        return users;
+    }
+
+    async findById(user_id: number | string): Promise<User | null> {
+        const [user] = await this.connection('users')
+            .select('*')
+            .where('user_id', '=', user_id);
+
+        return user;
+    }
+
+    async findDetails(user_id: number | string) {
+        const usersFieldsToReturn = [
             'user_id',
             'first_name',
             'last_name',
@@ -53,19 +95,14 @@ export class PostgresUsersRepository {
             'updated_at'
         ];
 
-        const users = await this.connection('users')
+        const [userDetails] = await this.connection
             .select(usersFieldsToReturn)
-            .limit(limit)
-            .offset(offset);
+            .avg({ score: 'users_scores.score' })
+            .from('users')
+            .where('user_id', '=', user_id)
+            .leftJoin('users_properties', 'users_properties.user_id', String(user_id))
+            .leftJoin('users_scores', 'users_scores.user_id', String(user_id))
 
-        return users;
-    }
-
-    async findById(user_id: number | string): Promise<User | null> {
-        const [user] = await this.connection('users')
-            .select('*')
-            .where('user_id', '=', user_id);
-
-        return user;
+        return userDetails;
     }
 }

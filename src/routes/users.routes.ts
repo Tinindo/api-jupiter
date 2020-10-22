@@ -6,6 +6,7 @@ import { createUserController } from '@useCases/Users/CreateUser';
 import { listUsersController } from '@useCases/Users/LIstUsers';
 import { createUserScoreController } from '@useCases/Users/Scores/CreateUserScore';
 import { createUserPropertyController } from '@useCases/Users/Properties/CreateUserProperty';
+import { findUserController } from '@useCases/Users/FindUser';
 
 
 const usersRoutes = Router();
@@ -16,6 +17,10 @@ usersRoutes.post('/', (request, response) => {
 
 usersRoutes.get('/', ensureAuthentication, paginationHandler, (request, response) => {
     return listUsersController.handle(request, response);
+});
+
+usersRoutes.get('/:user_id', ensureAuthentication, (request, response) => {
+    return findUserController.handle(request, response);
 });
 
 usersRoutes.post('/:user_id/properties', ensureAuthentication, (request, response) => {
