@@ -35,7 +35,7 @@ export class AuthenticateUserUseCase {
             throw new AppError('Combinação de usuário/senha inválida', 401);
         }
 
-        const token = sign(user, process.env.JWT_SECRET_KEY, {
+        const token = sign({ is_provider: user.is_provider }, process.env.JWT_SECRET_KEY, {
             subject: String(user.user_id),
             ...authConfig.jwt
         });
