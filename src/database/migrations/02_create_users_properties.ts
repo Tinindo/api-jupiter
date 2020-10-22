@@ -13,6 +13,8 @@ export async function up(knex: Knex): Promise<void> {
         table.string('city', 50).notNullable();
         table.string('state', 5).notNullable();
         table.string('country', 50).notNullable().defaultTo('BR');
+        table.string('latitude', 60);
+        table.string('longitude', 60);
 
         table.integer('rooms_quantity').unsigned().notNullable();
         table.integer('bathrooms_quantity').unsigned().notNullable();
