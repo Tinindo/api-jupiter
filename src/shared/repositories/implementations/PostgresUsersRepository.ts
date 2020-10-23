@@ -80,29 +80,44 @@ export class PostgresUsersRepository {
     }
 
     async findDetails(user_id: number | string) {
+        const usersProperties = await this.connection('users_properties')
+            .select('*')
+            .where('user_id', '=', user_id);
+
         const usersFieldsToReturn = [
-            'user_id',
-            'first_name',
-            'last_name',
-            'email',
-            'whatsapp',
-            'document',
-            'birth_date',
-            'is_provider',
-            'active',
-            'avatar',
-            'created_at',
-            'updated_at'
+            'users.user_id',
+            'users.first_name',
+            'users.last_name',
+            'users.email',
+            'users.whatsapp',
+            'users.document',
+            'users.birth_date',
+            'users.is_provider',
+            'users.active',
+            'users.avatar',
+            'users.created_at',
+            'users.updated_at',
+            // 'users_properties.*'
         ];
 
-        const [userDetails] = await this.connection
+        // SELECT users.user_id, users.first_name, users.last_name,
+        // AVG(users_scores.score) as score
+        // FROM users
+        // LEFT JOIN users_scores ON users_scores.user_id = 1
+        // WHERE users.user_id = 1
+        // GROUP BY users.user_id 
+
+        const [user] = await this.connection
             .select(usersFieldsToReturn)
             .avg({ score: 'users_scores.score' })
             .from('users')
-            .where('user_id', '=', user_id)
-            .leftJoin('users_properties', 'users_properties.user_id', String(user_id))
-            .leftJoin('users_scores', 'users_scores.user_id', String(user_id))
+            .leftJoin('users_scores', 'users_scores.user_id', 'users.user_id')
+            .where('users.user_id', '=', user_id)
+            .groupBy('users.user_id');
 
-        return userDetails;
+        return {
+            ...user,
+            properties: usersProperties
+        };
     }
 }

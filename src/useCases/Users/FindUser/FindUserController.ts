@@ -9,7 +9,7 @@ export class FindUserController {
     async handle(request: Request, response: Response) {
         const { user_id } = request.params;
 
-        const userDetails = this.findUserUseCase.execute(user_id);
+        const userDetails = await this.findUserUseCase.execute(user_id);
 
         return response.json(userDetails);
     }
