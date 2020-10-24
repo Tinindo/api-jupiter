@@ -80,7 +80,7 @@ export class PostgresUsersRepository {
     }
 
     async findDetails(user_id: number | string) {
-        const usersProperties = await this.connection('users_properties')
+        const userProperties = await this.connection('users_properties')
             .select('*')
             .where('user_id', '=', user_id);
 
@@ -97,7 +97,6 @@ export class PostgresUsersRepository {
             'users.avatar',
             'users.created_at',
             'users.updated_at',
-            // 'users_properties.*'
         ];
 
         // SELECT users.user_id, users.first_name, users.last_name,
@@ -105,7 +104,7 @@ export class PostgresUsersRepository {
         // FROM users
         // LEFT JOIN users_scores ON users_scores.user_id = 1
         // WHERE users.user_id = 1
-        // GROUP BY users.user_id 
+        // GROUP BY users.user_id
 
         const [user] = await this.connection
             .select(usersFieldsToReturn)
@@ -117,7 +116,7 @@ export class PostgresUsersRepository {
 
         return {
             ...user,
-            properties: usersProperties
+            properties: userProperties
         };
     }
 }

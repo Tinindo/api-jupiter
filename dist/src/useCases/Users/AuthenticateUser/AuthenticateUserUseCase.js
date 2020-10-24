@@ -22,7 +22,7 @@ class AuthenticateUserUseCase {
         if (!passwordMatched) {
             throw new AppError_1.AppError('Combinação de usuário/senha inválida', 401);
         }
-        const token = jsonwebtoken_1.sign(user, process.env.JWT_SECRET_KEY, Object.assign({ subject: String(user.user_id) }, auth_1.default.jwt));
+        const token = jsonwebtoken_1.sign({ is_provider: user.is_provider }, process.env.JWT_SECRET_KEY, Object.assign({ subject: String(user.user_id) }, auth_1.default.jwt));
         return { user, token };
     }
 }
