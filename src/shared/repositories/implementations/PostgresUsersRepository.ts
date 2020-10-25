@@ -1,4 +1,4 @@
-import Knex, { Raw } from 'knex';
+import Knex from 'knex';
 import { hash } from 'bcrypt';
 
 import { User } from '@entities/User';
@@ -38,7 +38,7 @@ export class PostgresUsersRepository {
     }
 
     async create(userRequest: User): Promise<User> {
-        userRequest.password = hashedPassword;
+        userRequest.password = await hash(userRequest.password, 10);
 
         const user = new User(userRequest);
 
@@ -78,6 +78,7 @@ export class PostgresUsersRepository {
             .avg({ score: 'users_scores.score' })
             .from('users')
             .leftJoin('users_scores', 'users.user_id', 'users_scores.user_id')
+            .where('active', '=', 'true')
             .groupBy('users.user_id')
             .limit(limit)
             .offset(offset);
