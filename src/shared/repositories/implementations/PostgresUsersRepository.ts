@@ -3,6 +3,8 @@ import { hash } from 'bcrypt';
 
 import { User } from '@entities/User';
 
+import { IUpdateUserDTO } from '@useCases/Users/UpdateUser/IUpdateUserDTO';
+
 export class PostgresUsersRepository {
     constructor(private connection: Knex) { }
 
@@ -22,7 +24,7 @@ export class PostgresUsersRepository {
         return user;
     }
 
-    async findActiveUserByEmail(email: string) {
+    async findActiveUserByEmail(email: string, returnPasswordHash = false) {
         const [user] = await this.connection('users')
             .select('*')
             .where('email', '=', email)
@@ -32,7 +34,9 @@ export class PostgresUsersRepository {
             return false;
         }
 
-        delete user.password;
+        if (!returnPasswordHash) {
+            delete user.password;
+        }
 
         return user;
     }
@@ -86,7 +90,7 @@ export class PostgresUsersRepository {
         return users;
     }
 
-    async update(user_id: number | string, payload: User): Promise<User> {
+    async update(user_id: number | string, payload: IUpdateUserDTO): Promise<User> {
         const [updatedUser] = await this.connection('users')
             .update(payload)
             .where('user_id', '=', user_id)

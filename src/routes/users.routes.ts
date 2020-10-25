@@ -2,11 +2,13 @@ import { Router } from 'express';
 import { ensureAuthentication } from '@shared/middlewares/ensureAuthentication';
 import { paginationHandler } from '@middlewares/paginationHandler';
 
-import { createUserController } from '@useCases/Users/CreateUser';
-import { listUsersController } from '@useCases/Users/LIstUsers';
-import { createUserScoreController } from '@useCases/Users/Scores/CreateUserScore';
-import { createUserPropertyController } from '@useCases/Users/Properties/CreateUserProperty';
 import { findUserController } from '@useCases/Users/FindUser';
+import { listUsersController } from '@useCases/Users/LIstUsers';
+import { createUserController } from '@useCases/Users/CreateUser';
+import { updateUserController } from '@useCases/Users/UpdateUser'
+
+import { createUserScoreController } from '@useCases/Scores/CreateUserScore';
+import { createUserPropertyController } from '@useCases/Properties/CreateUserProperty';
 
 
 const usersRoutes = Router();
@@ -22,6 +24,11 @@ usersRoutes.get('/', ensureAuthentication, paginationHandler, (request, response
 usersRoutes.get('/:user_id', ensureAuthentication, (request, response) => {
     return findUserController.handle(request, response);
 });
+
+usersRoutes.put('/:user_id', ensureAuthentication, (request, response) => {
+    return updateUserController.handle(request, response);
+});
+
 
 usersRoutes.post('/:user_id/properties', ensureAuthentication, (request, response) => {
     return createUserPropertyController.handle(request, response);
