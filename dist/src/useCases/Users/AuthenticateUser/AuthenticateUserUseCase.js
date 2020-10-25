@@ -13,7 +13,7 @@ class AuthenticateUserUseCase {
         this.userRepository = userRepository;
     }
     async execute({ email, password }) {
-        const user = await this.userRepository.findByEmail(email, true);
+        const user = await this.userRepository.findActiveUserByEmail(email, true);
         if (!user) {
             throw new AppError_1.AppError('Combinação de usuário/senha inválida', 401);
         }

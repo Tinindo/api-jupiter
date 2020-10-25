@@ -19,9 +19,21 @@ class PostgresUsersRepository {
         }
         return user;
     }
+    async findActiveUserByEmail(email, returnPasswordHash = false) {
+        const [user] = await this.connection('users')
+            .select('*')
+            .where('email', '=', email)
+            .andWhere('active', '=', true);
+        if (!user) {
+            return false;
+        }
+        if (!returnPasswordHash) {
+            delete user.password;
+        }
+        return user;
+    }
     async create(userRequest) {
-        const hashedPassword = await bcrypt_1.hash(userRequest.password, 10);
-        userRequest.password = hashedPassword;
+        userRequest.password = await bcrypt_1.hash(userRequest.password, 10);
         const user = new User_1.User(userRequest);
         const [createdUser] = await this.connection('users')
             .insert(user)
@@ -54,10 +66,19 @@ class PostgresUsersRepository {
             .avg({ score: 'users_scores.score' })
             .from('users')
             .leftJoin('users_scores', 'users.user_id', 'users_scores.user_id')
+            .where('active', '=', 'true')
             .groupBy('users.user_id')
             .limit(limit)
             .offset(offset);
         return users;
+    }
+    async update(user_id, payload) {
+        const [updatedUser] = await this.connection('users')
+            .update(payload)
+            .where('user_id', '=', user_id)
+            .returning('*');
+        delete updatedUser.password;
+        return updatedUser;
     }
     async findById(user_id) {
         const [user] = await this.connection('users')
