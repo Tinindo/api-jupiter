@@ -1,4 +1,7 @@
-import 'module-alias/register';
+if (!process.env.TS_NODE_DEV) {
+    require('module-alias/register');
+}
+
 import 'dotenv/config';
 import { app } from './app';
 
