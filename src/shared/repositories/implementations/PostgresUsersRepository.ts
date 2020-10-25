@@ -22,8 +22,22 @@ export class PostgresUsersRepository {
         return user;
     }
 
+    async findActiveUserByEmail(email: string) {
+        const [user] = await this.connection('users')
+            .select('*')
+            .where('email', '=', email)
+            .andWhere('active', '=', true);
+
+        if (!user) {
+            return false;
+        }
+
+        delete user.password;
+
+        return user;
+    }
+
     async create(userRequest: User): Promise<User> {
-        const hashedPassword = await hash(userRequest.password, 10);
         userRequest.password = hashedPassword;
 
         const user = new User(userRequest);
@@ -69,6 +83,17 @@ export class PostgresUsersRepository {
             .offset(offset);
 
         return users;
+    }
+
+    async update(user_id: number | string, payload: User): Promise<User> {
+        const [updatedUser] = await this.connection('users')
+            .update(payload)
+            .where('user_id', '=', user_id)
+            .returning('*');
+
+        delete updatedUser.password;
+
+        return updatedUser;
     }
 
     async findById(user_id: number | string): Promise<User | null> {
