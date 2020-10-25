@@ -22,7 +22,7 @@ export class AuthenticateUserUseCase {
     ) { }
 
     async execute({ email, password }: IAuthenticateUserRequest): Promise<IAuthenticateUserResponse> {
-        const user = await this.userRepository.findByEmail(email, true);
+        const user = await this.userRepository.findActiveUserByEmail(email);
 
         if (!user) {
             throw new AppError('Combinação de usuário/senha inválida', 401);
