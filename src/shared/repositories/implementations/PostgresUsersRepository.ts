@@ -110,10 +110,6 @@ export class PostgresUsersRepository {
     }
 
     async findDetails(user_id: number | string) {
-        const userProperties = await this.connection('users_properties')
-            .select('*')
-            .where('user_id', '=', user_id);
-
         const usersFieldsToReturn = [
             'users.user_id',
             'users.first_name',
@@ -143,6 +139,14 @@ export class PostgresUsersRepository {
             .leftJoin('users_scores', 'users_scores.user_id', 'users.user_id')
             .where('users.user_id', '=', user_id)
             .groupBy('users.user_id');
+
+        if (!user) {
+            return false;
+        }
+
+        const userProperties = await this.connection('users_properties')
+            .select('*')
+            .where('user_id', '=', user_id);
 
         return {
             ...user,
