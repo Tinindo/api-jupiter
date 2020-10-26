@@ -122,7 +122,14 @@ Os parâmetros limit e offset para o controle de paginação são opcionais.
 ```
 
 ### GET - /users/{user_id}
-Encontra detalhes do usuário pelo ID, 
+Encontra detalhes do usuário pelo ID. Necessário enviar o token no cabeçalho da requisição
+**Requisição**:
+```json
+{
+    "headers": {"Authorization": "Bearer ${token}"
+}
+```
+**Resposta**:
 ```json
 {
     "user_id": 8,
