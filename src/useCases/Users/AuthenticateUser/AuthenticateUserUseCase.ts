@@ -5,7 +5,7 @@ import authConfig from '@config/auth'
 
 import { AppError } from "@helpers/AppError";
 
-import { PostgresUsersRepository } from "@repositories/implementations/PostgresUsersRepository";
+import { IUsersRepository } from '@repositories/IUsersRepository';
 
 import { IAuthenticateUserRequest } from "./AuthenticateUserDTO";
 
@@ -18,7 +18,7 @@ interface IAuthenticateUserResponse {
 
 export class AuthenticateUserUseCase {
     constructor(
-        private userRepository: PostgresUsersRepository
+        private userRepository: IUsersRepository
     ) { }
 
     async execute({ email, password }: IAuthenticateUserRequest): Promise<IAuthenticateUserResponse> {

@@ -2,12 +2,12 @@ import { UpdateUser } from '@entities/UpdateUser';
 
 import { AppError } from "@helpers/AppError";
 
-import { PostgresUsersRepository } from "@repositories/implementations/PostgresUsersRepository";
+import { IUsersRepository } from '@repositories/IUsersRepository';
 
 import { IUpdateUserDTO } from './IUpdateUserDTO';
 
 export class UpdateUserUseCase {
-    constructor(private usersRepository: PostgresUsersRepository) { }
+    constructor(private usersRepository: IUsersRepository) { }
 
     async execute(user_id: number | string, data: IUpdateUserDTO) {
         const userExists = await this.usersRepository.findById(user_id);
