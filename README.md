@@ -63,7 +63,7 @@ Os parâmetros limit e offset para o controle de paginação são opcionais.
 **Requisição**:
 ```json
 {
-  "headers": {"Authorization": "Bearer ${token}"}
+  "headers": {"Authorization": "Bearer ${token}"},
   "query": {
     "limit": 20,
     "offset": 0
