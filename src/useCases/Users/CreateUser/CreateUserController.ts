@@ -14,6 +14,7 @@ export class CreateUserController {
             password,
             whatsapp,
             document,
+            avatar,
             birth_date
         } = request.body;
 
@@ -24,6 +25,7 @@ export class CreateUserController {
             password,
             whatsapp,
             document,
+            avatar,
             birth_date
         });
 
