@@ -1,7 +1,9 @@
-import { connection } from '@database/connection';
-import { PostgresUsersRepository } from '@repositories/implementations/PostgresUsersRepository';
 import { ListUsersUseCase } from './ListUsersUseCase';
 import { ListUsersController } from './ListUsersController';
+
+import { PostgresUsersRepository } from '@repositories/implementations/PostgresUsersRepository';
+
+import { connection } from '@database/connection';
 
 const usersRepository = new PostgresUsersRepository(connection);
 

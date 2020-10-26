@@ -5,5 +5,6 @@ export interface ICreateUserRequest {
     password: string;
     whatsapp: string;
     document: string;
+    avatar: string;
     birth_date: Date;
 }

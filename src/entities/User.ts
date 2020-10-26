@@ -13,6 +13,8 @@ export class User {
 
     public document: string;
 
+    public avatar?: string;
+
     public is_provider?: boolean;
 
     public birth_date: Date;
