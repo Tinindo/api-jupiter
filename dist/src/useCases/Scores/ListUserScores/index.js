@@ -1,0 +1,14 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.listUserScoresController = exports.listUserScoresUseCase = void 0;
+const PostgresUsersRepository_1 = require("@repositories/implementations/PostgresUsersRepository");
+const PostgresUsersScoresRepository_1 = require("@repositories/implementations/PostgresUsersScoresRepository");
+const ListUserScoresUseCase_1 = require("./ListUserScoresUseCase");
+const ListUserScoresController_1 = require("./ListUserScoresController");
+const connection_1 = require("@database/connection");
+const usersRepository = new PostgresUsersRepository_1.PostgresUsersRepository(connection_1.connection);
+const usersScoresRepository = new PostgresUsersScoresRepository_1.PostgresUsersScoresRepository(connection_1.connection);
+const listUserScoresUseCase = new ListUserScoresUseCase_1.ListUserScoresUseCase(usersRepository, usersScoresRepository);
+exports.listUserScoresUseCase = listUserScoresUseCase;
+const listUserScoresController = new ListUserScoresController_1.ListUserScoresController(listUserScoresUseCase);
+exports.listUserScoresController = listUserScoresController;
