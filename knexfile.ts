@@ -10,6 +10,9 @@ module.exports = {
         database: process.env.POSTGRES_DATABASE,
         ssl: { rejectUnauthorized: false }
     },
+    seeds: {
+        directory: './src/database/seeds'
+    },
     migrations: {
         directory: path.join(__dirname, 'src', 'database', 'migrations')
     },
