@@ -1,0 +1,11 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.listSpecialtiesController = exports.listSpecialtiesUseCase = void 0;
+const PostgresSpecialtiesRepository_1 = require("@repositories/implementations/PostgresSpecialtiesRepository");
+const ListSpecialtiesController_1 = require("./ListSpecialtiesController");
+const ListSpecialtiesUseCase_1 = require("./ListSpecialtiesUseCase");
+const specialtiesRepository = new PostgresSpecialtiesRepository_1.PostgresSpecialtiesRepository();
+const listSpecialtiesUseCase = new ListSpecialtiesUseCase_1.ListSpecialtiesUseCase(specialtiesRepository);
+exports.listSpecialtiesUseCase = listSpecialtiesUseCase;
+const listSpecialtiesController = new ListSpecialtiesController_1.ListSpecialtiesController(listSpecialtiesUseCase);
+exports.listSpecialtiesController = listSpecialtiesController;
