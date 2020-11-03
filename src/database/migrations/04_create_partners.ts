@@ -8,6 +8,7 @@ export async function up(knex: Knex): Promise<void> {
         table.string('bio', 500).nullable();
         table.float('value_per_day').notNullable().unsigned();
         table.boolean('accepts_mensal_proposals').defaultTo(false).notNullable();
+        table.boolean('is_corporate').notNullable();
 
         table.foreign('user_id')
             .references('user_id')
