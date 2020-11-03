@@ -1,6 +1,8 @@
+import { ISpecialtiesRepository } from '@repositories/ISpecialtiesRepository';
+
 import { connection } from '@database/connection';
 
-export class PostgresSpecialtiesRepository {
+export class PostgresSpecialtiesRepository implements ISpecialtiesRepository {
     async list() {
         const specialtiesFields = ['specialty_id', 'specialty_name', 'description']
 

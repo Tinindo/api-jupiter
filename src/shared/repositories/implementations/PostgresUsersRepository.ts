@@ -1,11 +1,12 @@
 import Knex from 'knex';
 import { hash } from 'bcrypt';
 
+import { IUsersRepository } from '@repositories/IUsersRepository';
 import { User } from '@entities/User';
 
 import { IUpdateUserDTO } from '@useCases/Users/UpdateUser/IUpdateUserDTO';
 
-export class PostgresUsersRepository {
+export class PostgresUsersRepository implements IUsersRepository {
     constructor(private connection: Knex) { }
 
     async findByEmail(email: string, returnPasswordHash = false): Promise<User | false> {

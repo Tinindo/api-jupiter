@@ -1,7 +1,9 @@
 import Knex from 'knex';
+import { IUsersPropertiesRepository } from '@repositories/IUsersPropertiesRepository';
+
 import { UserProperty } from '@entities/UserProperty';
 
-export class PostgresUsersPropertiesRepository {
+export class PostgresUsersPropertiesRepository implements IUsersPropertiesRepository {
     constructor(
         private connection: Knex
     ) { }
