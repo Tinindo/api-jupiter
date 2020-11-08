@@ -3,7 +3,6 @@ import { Partner } from '@entities/Partner';
 
 import { IUsersRepository } from "@repositories/IUsersRepository";
 import { IPartnersRepository } from "@repositories/IPartnersRepository";
-import { IPartnersSpecialtiesRepository } from "@repositories/IPartnersSpecialtiesRepository";
 
 import { ICreatePartnerDTO } from "./ICreatePartnerDTO";
 
@@ -13,7 +12,6 @@ export class CreatePartnerUseCase {
     constructor(
         private usersRepository: IUsersRepository,
         private partnersRepository: IPartnersRepository,
-        private partnersSpecialtiesRepository: IPartnersSpecialtiesRepository
     ) { }
 
     async execute(partnerPayload: ICreatePartnerDTO) {
@@ -50,7 +48,8 @@ export class CreatePartnerUseCase {
             bio,
             is_corporate,
             value_per_day,
-            accepts_mensal_proposals
+            accepts_mensal_proposals,
+            specialties
         } = partnerPayload;
 
         const partner = new Partner({
@@ -59,23 +58,16 @@ export class CreatePartnerUseCase {
             value_per_day,
             accepts_mensal_proposals,
             user_id: createdUser.user_id,
+            specialties,
         });
 
+        console.log(partner.specialties);
+
         const createdPartner = await this.partnersRepository.create(partner);
-
-        const { partner_id } = createdPartner;
-
-        const specialties = partnerPayload.specialties.map(spec => ({
-            partner_id,
-            specialty_id: spec.specialty_id,
-        }));
-
-        const createdSpecialties = await this.partnersSpecialtiesRepository.createMany(specialties);
 
         return {
             ...createdUser,
             ...createdPartner,
-            specialties: createdSpecialties
         };
     }
 }

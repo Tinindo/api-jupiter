@@ -1,8 +1,5 @@
 export interface IPartnerSpecialties {
-    specialty_id: number;
-    partner_id: number;
     specialty_name: string;
-    description: string;
 }
 
 export interface ICreatePartnerDTO {
