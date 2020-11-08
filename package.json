@@ -5,8 +5,8 @@
   "author": "Gabriel Moura",
   "license": "MIT",
   "engines": {
-    "node": "12.18.3"
-  }
+    "yarn": "1.19.1"
+  },
   "scripts": {
     "dev": "ts-node-dev --transpile-only -r tsconfig-paths/register --ignore-watch node_modules --respawn src/server.ts",
     "knex:migrate": "knex --knexfile knexfile.ts migrate:latest",
