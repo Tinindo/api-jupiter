@@ -2,7 +2,9 @@ import { PostgresSpecialtiesRepository } from "@repositories/implementations/Pos
 import { ListSpecialtiesController } from "./ListSpecialtiesController";
 import { ListSpecialtiesUseCase } from "./ListSpecialtiesUseCase";
 
-const specialtiesRepository = new PostgresSpecialtiesRepository();
+import { connection } from '@database/connection';
+
+const specialtiesRepository = new PostgresSpecialtiesRepository(connection);
 
 const listSpecialtiesUseCase = new ListSpecialtiesUseCase(specialtiesRepository);
 const listSpecialtiesController = new ListSpecialtiesController(listSpecialtiesUseCase);
