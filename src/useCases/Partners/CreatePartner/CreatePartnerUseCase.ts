@@ -52,6 +52,12 @@ export class CreatePartnerUseCase {
             specialties
         } = partnerPayload;
 
+        partnerPayload.specialties = partnerPayload.specialties.map(spec => (
+            {
+                specialty_name: spec.specialty_name.toLowerCase()
+            }
+        ));
+
         const partner = new Partner({
             bio,
             is_corporate,

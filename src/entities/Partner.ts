@@ -18,12 +18,6 @@ export class Partner {
     public specialties: IPartnerSpecialty[] | string; // Precisa ser convertido para string antes de ser inserido no Postgres
 
     constructor(props: Omit<Partner, 'partner_id'>) {
-        props.specialties = props.specialties.map(spec => (
-            {
-                specialty_name: spec.specialty_name.toLowerCase()
-            }
-        ));
-
         Object.assign(this, props);
     }
 }
