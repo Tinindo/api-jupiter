@@ -1,3 +1,7 @@
+export interface IPartnerSpecialty {
+    specialty_name: string;
+}
+
 export class Partner {
     public user_id: number;
 
@@ -11,7 +15,15 @@ export class Partner {
 
     public accepts_mensal_proposals: Boolean;
 
+    public specialties: IPartnerSpecialty[] | string; // Precisa ser convertido para string antes de ser inserido no Postgres
+
     constructor(props: Omit<Partner, 'partner_id'>) {
+        props.specialties = props.specialties.map(spec => (
+            {
+                specialty_name: spec.specialty_name.toLowerCase()
+            }
+        ));
+
         Object.assign(this, props);
     }
 }

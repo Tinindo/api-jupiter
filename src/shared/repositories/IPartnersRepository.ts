@@ -1,6 +1,7 @@
 import { Partner } from "@entities/Partner";
 
 export interface IPartnersRepository {
-    list(limit: number | string, offset: number | string): Promise<Partner[]>;
+    listFilteredBySpecialities(filters: string[], limit: number, offset: number): Promise<Partner[]>;
+    list(limit: number, offset: number): Promise<Partner[]>;
     create(payload: Partner): Promise<Partner>;
 }
