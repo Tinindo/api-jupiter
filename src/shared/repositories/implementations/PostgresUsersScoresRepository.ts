@@ -9,6 +9,8 @@ export class PostgresUsersScoresRepository implements IUsersScoresRepository {
     ) { }
 
     async create(data: UserScore) {
+        data.score = parseInt(String(data.score));
+
         const userScore = new UserScore(data);
 
         const [createdUserScore] = await this.connection('users_scores')
