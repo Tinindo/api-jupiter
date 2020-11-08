@@ -1,4 +1,5 @@
 import { PostgresSpecialtiesRepository } from "@repositories/implementations/PostgresSpecialtiesRepository";
+
 import { ListSpecialtiesController } from "./ListSpecialtiesController";
 import { ListSpecialtiesUseCase } from "./ListSpecialtiesUseCase";
 

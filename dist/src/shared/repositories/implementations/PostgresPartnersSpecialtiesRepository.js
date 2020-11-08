@@ -14,7 +14,7 @@ class PostgresPartnersSpecialtiesRepository {
     async createMany(speacialtiesArray) {
         const createdPartnerSpecialties = await this.connection('partners_specialties')
             .insert(speacialtiesArray)
-            .returning('*');
+            .returning('specialty_id, created_at');
         return createdPartnerSpecialties;
     }
 }

@@ -5,10 +5,9 @@ const User_1 = require("@entities/User");
 const Partner_1 = require("@entities/Partner");
 const AppError_1 = require("@helpers/AppError");
 class CreatePartnerUseCase {
-    constructor(usersRepository, partnersRepository, partnersSpecialtiesRepository) {
+    constructor(usersRepository, partnersRepository) {
         this.usersRepository = usersRepository;
         this.partnersRepository = partnersRepository;
-        this.partnersSpecialtiesRepository = partnersSpecialtiesRepository;
     }
     async execute(partnerPayload) {
         const userExists = await this.usersRepository.findByEmail(partnerPayload.email);
@@ -27,22 +26,18 @@ class CreatePartnerUseCase {
             is_provider: true
         });
         const createdUser = await this.usersRepository.create(user);
-        const { bio, is_corporate, value_per_day, accepts_mensal_proposals } = partnerPayload;
+        const { bio, is_corporate, value_per_day, accepts_mensal_proposals, specialties } = partnerPayload;
         const partner = new Partner_1.Partner({
             bio,
             is_corporate,
             value_per_day,
             accepts_mensal_proposals,
             user_id: createdUser.user_id,
+            specialties,
         });
+        console.log(partner.specialties);
         const createdPartner = await this.partnersRepository.create(partner);
-        const { partner_id } = createdPartner;
-        const specialties = partnerPayload.specialties.map(spec => ({
-            partner_id,
-            specialty_id: spec.specialty_id,
-        }));
-        const createdSpecialties = await this.partnersSpecialtiesRepository.createMany(specialties);
-        return Object.assign(Object.assign(Object.assign({}, createdUser), createdPartner), { specialties: createdSpecialties });
+        return Object.assign(Object.assign({}, createdUser), createdPartner);
     }
 }
 exports.CreatePartnerUseCase = CreatePartnerUseCase;

@@ -7,6 +7,7 @@ class PostgresUsersScoresRepository {
         this.connection = connection;
     }
     async create(data) {
+        data.score = parseInt(String(data.score));
         const userScore = new UserScore_1.UserScore(data);
         const [createdUserScore] = await this.connection('users_scores')
             .insert(userScore)

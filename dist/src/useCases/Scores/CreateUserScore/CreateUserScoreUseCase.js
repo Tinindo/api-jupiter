@@ -8,6 +8,9 @@ class CreateUserScoreUseCase {
         this.usersScoresRespository = usersScoresRespository;
     }
     async execute(user_id, userScorePayload) {
+        if (userScorePayload.score > 5 || userScorePayload.score < 1) {
+            throw new AppError_1.AppError('Avaliação inválida. O valor de pontuação deve estar entre 1 e 5');
+        }
         const userExists = await this.usersRepository.findById(user_id);
         if (!userExists) {
             throw new AppError_1.AppError('Estranho... parece que esse usuário não existe. Verifique a requisição e tente novamente', 400);
