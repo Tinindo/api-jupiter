@@ -27,6 +27,9 @@ class CreatePartnerUseCase {
         });
         const createdUser = await this.usersRepository.create(user);
         const { bio, is_corporate, value_per_day, accepts_mensal_proposals, specialties } = partnerPayload;
+        partnerPayload.specialties = partnerPayload.specialties.map(spec => ({
+            specialty_name: spec.specialty_name.toLowerCase()
+        }));
         const partner = new Partner_1.Partner({
             bio,
             is_corporate,
