@@ -10,6 +10,10 @@ export class CreateUserScoreUseCase {
     ) { }
 
     async execute(user_id: number, userScorePayload: IUserScoreRequest) {
+        if (userScorePayload.score > 5 || userScorePayload.score < 1) {
+            throw new AppError('Avaliação inválida. O valor de pontuação deve estar entre 1 e 5');
+        }
+
         const userExists = await this.usersRepository.findById(user_id);
 
         if (!userExists) {
