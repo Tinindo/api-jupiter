@@ -52,11 +52,9 @@ export class CreatePartnerUseCase {
             specialties
         } = partnerPayload;
 
-        partnerPayload.specialties = partnerPayload.specialties.map(spec => (
-            {
-                specialty_name: spec.specialty_name.toLowerCase()
-            }
-        ));
+        partnerPayload.specialties = partnerPayload.specialties.map(spec => ({
+            specialty_name: spec.specialty_name.toLowerCase()
+        }));
 
         const partner = new Partner({
             bio,
@@ -66,8 +64,6 @@ export class CreatePartnerUseCase {
             user_id: createdUser.user_id,
             specialties,
         });
-
-        console.log(partner.specialties);
 
         const createdPartner = await this.partnersRepository.create(partner);
 
