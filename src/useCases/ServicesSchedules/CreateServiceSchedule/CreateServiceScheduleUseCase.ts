@@ -1,5 +1,6 @@
 import { ServiceSchedule } from "@entities/ServiceSchedule";
 import { AppError } from "@helpers/AppError";
+import { validateFields } from '@helpers/validateFields';
 import { IServicesScheduleRepository } from "@repositories/IServicesSchedulesRepository";
 import { ICreateServiceScheduleDTO } from "./ICreateServiceScheduleDTO";
 
@@ -9,6 +10,10 @@ export class CreateScheduleUseCase {
     ) { }
 
     async execute(serviceSchedulePayload: ICreateServiceScheduleDTO) {
+        const requiredFields = ['user_id', 'partner_id', 'user_property_id', 'price', 'start_at', 'finish_at'];
+
+        validateFields(requiredFields, serviceSchedulePayload);
+
         const isScheduleAvailable = await this.servicesSchedulesRepository.isScheduleAvailable(serviceSchedulePayload);
 
         if (!isScheduleAvailable) {

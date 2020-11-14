@@ -1,5 +1,6 @@
 import { IUsersRepository } from '@repositories/IUsersRepository'
 import { ICreateUserRequest } from './CreateUserDTO';
+import { validateFields } from '@helpers/validateFields';
 import { AppError } from '@helpers/AppError';
 import { User } from '@entities/User';
 
@@ -7,6 +8,10 @@ export class CreateUserUseCase {
     constructor(private usersRepository: IUsersRepository) { }
 
     async execute(data: ICreateUserRequest): Promise<User> {
+        const requiredFields = ['first_name', 'last_name', 'email', 'password', 'whatsapp', 'document', 'birth_date'];
+
+        validateFields(requiredFields, data);
+
         const userAlreadyExists = await this.usersRepository.findByEmail(data.email);
 
         if (userAlreadyExists) {

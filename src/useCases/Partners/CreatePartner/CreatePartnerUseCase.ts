@@ -6,6 +6,7 @@ import { IPartnersRepository } from "@repositories/IPartnersRepository";
 
 import { ICreatePartnerDTO } from "./ICreatePartnerDTO";
 
+import { validateFields } from '@helpers/validateFields';
 import { AppError } from "@helpers/AppError";
 
 export class CreatePartnerUseCase {
@@ -15,6 +16,10 @@ export class CreatePartnerUseCase {
     ) { }
 
     async execute(partnerPayload: ICreatePartnerDTO) {
+        const requiredFields = ['first_name', 'last_name', 'email', 'password', 'whatsapp', 'document', 'birth_date', 'value_per_day', 'is_corporate', 'specialties', 'accepts_mensal_proposals'];
+
+        validateFields(requiredFields, partnerPayload);
+
         const userExists = await this.usersRepository.findByEmail(partnerPayload.email);
 
         if (userExists) {
