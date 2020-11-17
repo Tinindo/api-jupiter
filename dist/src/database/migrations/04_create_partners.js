@@ -9,6 +9,7 @@ async function up(knex) {
         table.float('value_per_day').notNullable().unsigned();
         table.boolean('accepts_mensal_proposals').defaultTo(false).notNullable();
         table.boolean('is_corporate').notNullable();
+        table.jsonb('specialties').notNullable();
         table.foreign('user_id')
             .references('user_id')
             .inTable('users')

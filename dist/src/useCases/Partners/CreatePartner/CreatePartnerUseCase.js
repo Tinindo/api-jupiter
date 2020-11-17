@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.CreatePartnerUseCase = void 0;
 const User_1 = require("@entities/User");
 const Partner_1 = require("@entities/Partner");
+const validateFields_1 = require("@helpers/validateFields");
 const AppError_1 = require("@helpers/AppError");
 class CreatePartnerUseCase {
     constructor(usersRepository, partnersRepository) {
@@ -10,6 +11,8 @@ class CreatePartnerUseCase {
         this.partnersRepository = partnersRepository;
     }
     async execute(partnerPayload) {
+        const requiredFields = ['first_name', 'last_name', 'email', 'password', 'whatsapp', 'document', 'birth_date', 'value_per_day', 'is_corporate', 'specialties', 'accepts_mensal_proposals'];
+        validateFields_1.validateFields(requiredFields, partnerPayload);
         const userExists = await this.usersRepository.findByEmail(partnerPayload.email);
         if (userExists) {
             throw new AppError_1.AppError('Parece que já existe um usuário com esse e-mail');
@@ -38,7 +41,6 @@ class CreatePartnerUseCase {
             user_id: createdUser.user_id,
             specialties,
         });
-        console.log(partner.specialties);
         const createdPartner = await this.partnersRepository.create(partner);
         return Object.assign(Object.assign({}, createdUser), createdPartner);
     }

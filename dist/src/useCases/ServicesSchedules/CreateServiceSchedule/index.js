@@ -1,0 +1,12 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.createServiceScheduleController = exports.createScheduleUseCase = void 0;
+const connection_1 = require("@database/connection");
+const PostgresServicesSchedulesRepository_1 = require("@repositories/implementations/PostgresServicesSchedulesRepository");
+const CreateServiceScheduleUseCase_1 = require("./CreateServiceScheduleUseCase");
+const CreateServiceScheduleController_1 = require("./CreateServiceScheduleController");
+const servicesSchedulesRepository = new PostgresServicesSchedulesRepository_1.PostgresServicesSchedulesRepository(connection_1.connection);
+const createScheduleUseCase = new CreateServiceScheduleUseCase_1.CreateScheduleUseCase(servicesSchedulesRepository);
+exports.createScheduleUseCase = createScheduleUseCase;
+const createServiceScheduleController = new CreateServiceScheduleController_1.CreateServiceScheduleController(createScheduleUseCase);
+exports.createServiceScheduleController = createServiceScheduleController;
