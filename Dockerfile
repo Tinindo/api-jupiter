@@ -8,12 +8,13 @@ WORKDIR /usr/app
 COPY package.json yarn.lock ./
 
 # Instala dependências do projeto
-RUN yarn install
+RUN npm install
 
 # Copia todo conteúdo do diretório (ignorando node_modules na .dockerignore)
 COPY . .
 
 # Roda script de produção
-CMD ["yarn", "dev"]
+CMD ["npm", "start"]
+
 #Expõe a porta 3030
 EXPOSE 3030
